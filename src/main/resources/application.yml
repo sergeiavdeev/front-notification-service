@@ -11,4 +11,4 @@ spring:
       mapping-path: /rsocket
       port: 8086
 rabbit:
-  queue: front.in
+  queueFrontIn: front.in

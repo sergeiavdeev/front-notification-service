@@ -1,0 +1,26 @@
+services:
+  resource-service:
+    build: .
+    image: sergeiavdeev/front-notification-service:${TAG}
+    container_name: front-notification-service
+    ports:
+      - "8085:8085"
+    command: java -jar front-notification-service-0.0.1-SNAPSHOT.jar
+    restart: always
+    environment:
+      spring.profiles.active: ${PROFILE}
+    networks:
+      - ttc-tops
+    deploy:
+      resources:
+        limits:
+          memory: '256M'
+        reservations:
+          memory: '256M'
+networks:
+  ttc-tops:
+    external: true
+    name: ttc-tops
+    driver: bridge
+
+

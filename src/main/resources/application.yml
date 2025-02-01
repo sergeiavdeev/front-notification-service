@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: front-notification-service
+  rabbitmq:
+    host: localhost
+    username: avdey
+    password: 61Ifhjukjn$
+  rsocket:
+    server:
+      transport: websocket
+      mapping-path: /rsocket
+      port: 8086
+rabbit:
+  queue: front.in

@@ -10,9 +10,9 @@ spring:
       transport: websocket
       mapping-path: /rsocket
       port: 8086
-rabbit:
-  queueFrontIn: front.in
-  queueTelegramIn: telegram.in
+queues:
+  frontIn: front.in
+  telegramIn: telegram.in
 bot:
   token: 7487503506:AAHs3DkvFz_8uzo8mY_XWSUEv5s-6io4qGc
   name: Cnttops_bot

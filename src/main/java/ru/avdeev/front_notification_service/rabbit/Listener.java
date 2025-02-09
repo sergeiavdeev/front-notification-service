@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import ru.avdeev.front_notification_service.bot.Bot;
 import ru.avdeev.front_notification_service.bot.BotProperties;
 import ru.avdeev.front_notification_service.dto.Booking;
+import ru.avdeev.front_notification_service.dto.Event;
 import ru.avdeev.front_notification_service.repository.EventRepository;
 
 import java.util.Objects;
@@ -25,13 +26,18 @@ public class Listener {
     private final Bot bot;
 
     @RabbitListener(queuesToDeclare = @Queue(name = "${queues.frontIn}", durable = "true"))
-    public void frontInListener(Message<Booking> message) {
+    public void frontInListener(Message<Object> message) {
 
         String type = Objects.requireNonNull(message.getHeaders().get("type")).toString();
-        Booking booking = message.getPayload();
-        receiveLog("frontInListener" ,type, booking);
+        Object data = message.getPayload();
 
-        eventRepository.put(booking)
+        Event event = new Event();
+        event.setType(type);
+        event.setData(data);
+
+        receiveLog("frontInListener" ,type, event);
+
+        eventRepository.put(event)
                 .subscribe(msg -> log.info("Message save to EventRepository: {}", msg));
     }
 
@@ -39,6 +45,9 @@ public class Listener {
     public void telegramInListener(Message<Booking> message) {
 
         String type = Objects.requireNonNull(message.getHeaders().get("type")).toString();
+        if (!type.equals("BookingCreated")) {
+            return;
+        }
         Booking booking = message.getPayload();
         receiveLog("telegramInListener", type, booking);
 
@@ -51,7 +60,7 @@ public class Listener {
         log.info("Message sent to telegram: {}", msgText);
     }
 
-    private void receiveLog(String qName, String type, Booking booking) {
-        log.info("{}: received message\ntype: {}\nbody: {}", qName, type, booking);
+    private void receiveLog(String qName, String type, Object data) {
+        log.info("{}: received message\ntype: {}\nbody: {}", qName, type, data);
     }
 }

@@ -1,6 +1,8 @@
 spring:
   application:
     name: front-notification-service
+    admin:
+      enabled: true
   config:
     import: configserver:http://config-server:8888
   cloud:

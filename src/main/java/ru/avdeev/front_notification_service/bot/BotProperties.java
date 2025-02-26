@@ -11,6 +11,5 @@ import java.util.List;
 @Data
 public class BotProperties {
 
-    private String token;
     private List<Long> receivers;
 }

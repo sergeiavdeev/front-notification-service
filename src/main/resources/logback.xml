@@ -10,7 +10,7 @@
                 </http>
                 <format class="">
                     <label>
-                        <pattern>app=order-service,host=${HOSTNAME},level=%level</pattern>
+                        <pattern>app=front-notification-service,host=${HOSTNAME},level=%level</pattern>
                     </label>
                     <message>
                         <pattern>l=%level h=${HOSTNAME} c=%logger{20} t=%thread | %msg %ex</pattern>

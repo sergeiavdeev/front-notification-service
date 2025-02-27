@@ -9,12 +9,13 @@ services:
     restart: always
     environment:
       spring.profiles.active: ${PROFILE}
+      LOKI: ${LOKI}
     networks:
       - ttc-tops
     deploy:
       resources:
         limits:
-          memory: '256M'
+          memory: '384M'
         reservations:
           memory: '256M'
 networks:
